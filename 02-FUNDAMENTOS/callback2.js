@@ -64,7 +64,7 @@ getEmpleado(1, (err, empleado) => {
     }
 
     // console.log(empleado);
-
+    
     getSalario(empleado, (err, resp) => {
 
         if(err){
