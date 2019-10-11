@@ -4,32 +4,33 @@ const {crearArchivo, crearArchivoCallback, obtenerCallback, obtenerPromise} = re
 
 // console.log(module);
 
-let base = 16;
+let base = 'asdf';
+let limite = 10;
 
 // Promise
-// crearArchivo(base, 10)
+// crearArchivo(base, limite)
 //     .then(resultado => {
 //         console.log(`Se ha creado ${resultado} exitosamente!`);
 //     })
 //     .catch(err => console.log(err));
 
 // Callback
-// crearArchivoCallback(base, 10,(err, resultado) => {
-//     if(err){
-//         console.log(err);
-//     }
+crearArchivoCallback(base, limite,(err, resultado) => {
+    if(err){
+        console.log(err);
+    }
 
-//     console.log(`Se ha creadi la ${resultado} exitosamente!`);
-// })
+    console.log(`Se ha creado la ${resultado} exitosamente!`);
+})
 
 // Async-Await
-// obtenerCallback(base, 10)
+// obtenerCallback(base, limite)
 //     .then(result => {
 //         console.log(result);
 //     })
 //     .catch(err => console.log(err));
 
-// multiplicar.obtenerPromise(base, 10)
+// multiplicar.obtenerPromise(base, limite)
 //     .then((result) => {
 //         console.log(result);
 //     }).catch((err) => {
