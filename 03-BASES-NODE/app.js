@@ -1,24 +1,37 @@
 // paquetes
-const fs = require('fs');
+// Desestructurar un objeto o tambien puede verse como crear variables con la propiedad indicada del archivo.js que quiero extraer y usar
+const {crearArchivo, crearArchivoCallback, obtenerCallback, obtenerPromise} = require('./multiplicar/multiplicar');
 
+// console.log(module);
 
-let base = 5;
-let data = ``;
+let base = 16;
 
-function multiplicacion(base, limite) {
-    
-    for(let i = 1; i <= limite; i++){
-        data += `${base} * ${i} = ${base * i}\n`;
-    }
-}
+// Promise
+// crearArchivo(base, 10)
+//     .then(resultado => {
+//         console.log(`Se ha creado ${resultado} exitosamente!`);
+//     })
+//     .catch(err => console.log(err));
 
-multiplicacion(base, 10);
+// Callback
+// crearArchivoCallback(base, 10,(err, resultado) => {
+//     if(err){
+//         console.log(err);
+//     }
 
-// 1- Nombre del archivo y extencion a crear, 2- el contenido que tendra 3- callback
-// en el nombre del archivo nosotros podemos indicar una carpeta carpeta/nombre.extencion
-fs.writeFile(`tablas/tabla-${base}.txt`, data, (err) => {
+//     console.log(`Se ha creadi la ${resultado} exitosamente!`);
+// })
 
-  if (err) throw err;
+// Async-Await
+// obtenerCallback(base, 10)
+//     .then(result => {
+//         console.log(result);
+//     })
+//     .catch(err => console.log(err));
 
-  console.log(`El archivo con la tabla del ${base} ha sido creada`);
-});
+// multiplicar.obtenerPromise(base, 10)
+//     .then((result) => {
+//         console.log(result);
+//     }).catch((err) => {
+//         console.log(err);
+//     });
