@@ -4,8 +4,14 @@ const { crearArchivo, crearArchivoCallback, obtenerCallback, obtenerPromise } = 
 
 // console.log(module);
 
-let base = 'asdf';
+// let base = 'asdf';
 let limite = 10;
+// argv => argumentos que se tomaran por consola ej: nodemon app (--numero=5 este es un parametro por consola incluyendo los --)
+// process son lso precedimientos que se estan ejecutando del cual nos mostrar todos los datos de nuestra computadora
+let argv = process.argv;
+let parametro = argv[2];
+// Split es para separar y convierte el string en un arreglo(cajita)
+let base = parametro.split('=')[1];
 
 // Promise
 // crearArchivo(base, limite)
@@ -36,3 +42,5 @@ crearArchivoCallback(base, limite, (err, resultado) => {
 //     }).catch((err) => {
 //         console.log(err);
 //     });
+
+// console.log(process.argv);
