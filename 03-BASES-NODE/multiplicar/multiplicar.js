@@ -37,7 +37,6 @@ let crearArchivo = (base, limite) => {
         }
     });
 }
-
 // convertirlo a callback
 let crearArchivoCallback = (base, limite, callback) => {
 
