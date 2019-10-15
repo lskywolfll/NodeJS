@@ -1,6 +1,6 @@
 // paquetes
 // Desestructurar un objeto o tambien puede verse como crear variables con la propiedad indicada del archivo.js que quiero extraer y usar
-const {crearArchivo, crearArchivoCallback, obtenerCallback, obtenerPromise} = require('./multiplicar/multiplicar');
+const { crearArchivo, crearArchivoCallback, obtenerCallback, obtenerPromise } = require('./multiplicar/multiplicar');
 
 // console.log(module);
 
@@ -15,12 +15,12 @@ let limite = 10;
 //     .catch(err => console.log(err));
 
 // Callback
-crearArchivoCallback(base, limite,(err, resultado) => {
-    if(err){
+crearArchivoCallback(base, limite, (err, resultado) => {
+    if (err) {
         console.log(err);
+    } else {
+        console.log(`Se ha creado la ${resultado} exitosamente!`);
     }
-
-    console.log(`Se ha creado la ${resultado} exitosamente!`);
 })
 
 // Async-Await

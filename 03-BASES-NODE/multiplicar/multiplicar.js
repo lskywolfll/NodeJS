@@ -8,16 +8,6 @@ let crearArchivo = (base, limite) => {
 
     return new Promise((resolve, reject) => {
 
-        if (!Number(base) | !Number(limite)) {
-            if (!Number(base) && !Number(limite)) {
-                reject(`El valor introducido ${base} y ${limite} no son numeros!!`);
-                return;
-            } else {
-                reject(`El valor introducido ${base} no es un numero!`);
-                return;
-            }
-        }
-
         let data = ``;
 
         function multiplicacion(base, limite) {
@@ -27,33 +17,29 @@ let crearArchivo = (base, limite) => {
             }
         }
 
-        multiplicacion(base, limite);
+        if (!Number(base) | !Number(limite)) {
+            if (!Number(base) && !Number(limite)) {
+                return reject(`El valor introducido ${base} y ${limite} no son numeros!!`);
+            } else {
+                return reject(`El valor introducido ${base} no es un numero!`);
+            }
+        } else {
+            multiplicacion(base, limite);
 
-        // 1- Nombre del archivo y extencion a crear, 2- el contenido que tendra 3- callback
-        // en el nombre del archivo nosotros podemos indicar una carpeta carpeta/nombre.extencion
-        fs.writeFile(`tablas/tabla-${base}.txt`, data, (err) => {
-
-            if (err)
-                reject(err);
-            else
-                resolve(`tabla-${base}.txt`)
-        });
+            // 1- Nombre del archivo y extencion a crear, 2- el contenido que tendra 3- callback
+            // en el nombre del archivo nosotros podemos indicar una carpeta carpeta/nombre.extencion
+            fs.writeFile(`tablas/tabla-${base}.txt`, data, (err) => {
+                if (err)
+                    reject(err);
+                else
+                    resolve(`tabla-${base}.txt`)
+            });
+        }
     });
 }
 
 // convertirlo a callback
 let crearArchivoCallback = (base, limite, callback) => {
-
-    if (!Number(base)) {
-        if (!Number(base) && !Number(limite)) {
-            callback(`El valor introducido ${base} y ${limite} no son numeros!!`);
-            return;
-        } else {
-            callback(`El valor introducido ${base} no es un numero!`);
-            return;
-        }
-    }
-
 
     let data = ``;
 
@@ -64,16 +50,24 @@ let crearArchivoCallback = (base, limite, callback) => {
         }
     }
 
-    multiplicacion(base, limite);
-    // 1- Nombre del archivo y extencion a crear, 2- el contenido que tendra 3- callback
-    // en el nombre del archivo nosotros podemos indicar una carpeta carpeta/nombre.extencion
-    fs.writeFile(`tablas/tabla-${base}.txt`, data, (err) => {
+    if (!Number(base)) {
+        if (!Number(base) && !Number(limite)) {
+            return callback(`El valor introducido ${base} y ${limite} no son numeros!!`);
+        } else {
+            return callback(`El valor introducido ${base} no es un numero!`);
+        }
 
-        if (err)
-            callback(`No se ha podido crear!!`);
-        else
-            callback(null, `tabla-${base}.txt`)
-    });
+    } else {
+        multiplicacion(base, limite);
+        fs.writeFile(`tablas/tabla-${base}.txt`, data, (err) => {
+
+            if (err)
+                callback(`No se ha podido crear!!`);
+            else
+                callback(null, `tabla-${base}.txt`)
+        });
+    }
+
 
 }
 // convertirlo a async-await
