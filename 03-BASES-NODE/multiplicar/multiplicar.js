@@ -4,7 +4,13 @@ const fs = require('fs');
 // Number
 // Este convertira a numero siempre y cuadno sea un numeral, entonces '5' = 5 usandolo por lo cual al usarlo para validar resultados concretos de nuestra funcion nos beneficia gratamente ya que no limite el uso y alcance de este para ser implementado
 
-let crearArchivo = (base, limite) => {
+let listarTabla = (base, limite = 10) => {
+    for(let i = 1; i <= limite; i++){
+        console.log(`${base} * ${i} = ${base * i}`);
+    }
+}
+
+let crearArchivo = (base, limite = 10) => {
 
     return new Promise((resolve, reject) => {
 
@@ -38,7 +44,7 @@ let crearArchivo = (base, limite) => {
     });
 }
 // convertirlo a callback
-let crearArchivoCallback = (base, limite, callback) => {
+let crearArchivoCallback = (base, limite = 10, callback) => {
 
     let data = ``;
 
@@ -70,14 +76,14 @@ let crearArchivoCallback = (base, limite, callback) => {
 
 }
 // convertirlo a async-await
-let obtenerCallback = async (base, limite) => {
+let obtenerCallback = async (base, limite = 10) => {
 
     let archivoCallback = await crearArchivo(base, limite);
 
     return archivoCallback
 }
 
-let obtenerPromise = async (base, limite) => {
+let obtenerPromise = async (base, limite = 10) => {
 
     let archivoPromise = await crearArchivo(base, limite);
 
@@ -88,5 +94,6 @@ module.exports = {
     crearArchivo,
     crearArchivoCallback,
     obtenerCallback,
-    obtenerPromise
+    obtenerPromise,
+    listarTabla
 }
