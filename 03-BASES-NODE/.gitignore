@@ -1,1 +1,4 @@
+#Se exluyen carpetas
 node_modules
+#Excluir archivos con una extension dentro de una carpeta
+tablas/*.txt
