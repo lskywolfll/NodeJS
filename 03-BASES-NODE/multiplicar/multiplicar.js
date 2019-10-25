@@ -1,10 +1,16 @@
 // requireds
 const fs = require('fs');
+const colors = require('colors');
 
 // Number
 // Este convertira a numero siempre y cuadno sea un numeral, entonces '5' = 5 usandolo por lo cual al usarlo para validar resultados concretos de nuestra funcion nos beneficia gratamente ya que no limite el uso y alcance de este para ser implementado
 
 let listarTabla = (base, limite = 10) => {
+
+    console.log('===================='.green);
+    console.log(`==========tabla de ${base}`.green);
+    console.log('===================='.green);
+
     for(let i = 1; i <= limite; i++){
         console.log(`${base} * ${i} = ${base * i}`);
     }

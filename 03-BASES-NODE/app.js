@@ -1,27 +1,6 @@
 // paquetes
-const argv = require('yargs')
-    .command('listar', 'Imprime ne consola la tabla de multiplicar', {
-        base: {
-            demand: true,
-            alias: 'b'
-        },
-        limite: {
-            alias: 'l',
-            default: 10
-        }
-    })
-    .command('crear', 'Crea una tabla', {
-        base: {
-            demand: true,
-            alias: 'b'
-        },
-        limite: {
-            alias: 'l',
-            default: 10
-        }
-    })
-    .help()
-    .argv;
+const argv  = require('./config/yargs').argv;
+const colors = require('colors');
 // Desestructurar un objeto o tambien puede verse como crear variables con la propiedad indicada del archivo.js que quiero extraer y usar
 const { crearArchivo, crearArchivoCallback, obtenerCallback, obtenerPromise, listarTabla } = require('./multiplicar/multiplicar');
 
@@ -42,7 +21,7 @@ switch (comando) {
     case 'crear':
         crearArchivo(argv.base, argv.limit)
         .then(archivo => {
-            console.log(`Archivo creado: ${archivo}`);
+            console.log(`Archivo creado: ${colors.blue(archivo)}`);
         }).catch((err) => {
             console.log(err);
         });
