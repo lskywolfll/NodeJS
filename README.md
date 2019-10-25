@@ -2,6 +2,19 @@
 Practica con nodejs y explicaciones en conjunto para comprender
 Se iran integrando comprensiones como comentarios conjunto a ejemplos sencillos para poder comprender mas a fondo como funciona cada cosa al igual que el funcionamiento
 
+# Instalacion de paquetes
+
+## Instalar 
+
+`npm install <paquete>`
+
+## Instalar y agregar a dependencias del package json
+
+`npm install --save <paquete>`
+
+## Instalar mas de un paquete en una instalacion
+
+`npm install --save <PrimerPaquete> <SegundoPaquete>`
 
 ## Multiplicar Console App
 
