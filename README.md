@@ -26,8 +26,8 @@ Es una aplicacion para generar archivos de tablas de multiplicar
 
 ### Pasos:
 
-1. npm install
-2. node app.js crear --limite 5 --base 5
-2. Otra forma -> node app < command > < Argumento o alias > < valor >
+1. `npm install`
+2. `node app.js crear --limite 5 --base 5`
+2. Otra forma -> `node app < command > < Argumento o alias > < valor >`
 
-ej: node app crear -l 10 -b 3
+> ej: `node app crear -l 10 -b 3`
