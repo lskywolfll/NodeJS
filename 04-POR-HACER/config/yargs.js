@@ -12,7 +12,11 @@ const opts = {
         default: true,
         type: 'boolean',
         alias: 'c',
-        desc: 'Marca como compeltado o pendiente la tarea'
+        desc: 'Marca como completado o pendiente la tarea'
+    },
+    eliminar: {
+        alias: 'e',
+        desc: 'Contenido a eliminar'
     }
 }
 
@@ -20,6 +24,7 @@ const opts = {
 const { argv } = require('yargs')
     .command('crear', 'Crea una tarea para el TO DO', opts)
     .command('actualizar', 'Actualiza una tarea creada en el TO DO', opts)
+    .command('eliminar', 'Borra una tarea', opts)
     .help()
 
 module.exports = argv;
