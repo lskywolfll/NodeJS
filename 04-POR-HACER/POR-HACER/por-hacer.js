@@ -1,7 +1,7 @@
 
 // Modulo con el cual tendremos superpoderes para manejar archivos,leer,crear,eliminar y otras muchas cosas que se te ocurra!!
 const fs = require('fs');
-
+// lista de tareas
 let listadoPorHacer = [];
 
 const guardarDatos = (mensaje = 'Se han registrado los datos en la BD') => {
@@ -28,7 +28,7 @@ const crear = (descripcion) => {
 
     ObtenerDatosBD();
 
-    let porHacer = {
+    const porHacer = {
         descripcion,
         completado: false
     };
@@ -53,11 +53,7 @@ const actualizar = (descripcion, completado = true) =>{
     let posicion = listadoPorHacer.findIndex( tarea  => tarea.descripcion === descripcion);
 
     if (posicion >= 0){
-        console.log(posicion);
         listadoPorHacer[posicion].completado = completado;
-        if(listadoPorHacer[posicion]){
-            console.log(listadoPorHacer[posicion]);
-        }
         guardarDatos();
         return true;
     }else{
@@ -66,17 +62,29 @@ const actualizar = (descripcion, completado = true) =>{
 }
 
 const borrar = (descripcion) => {
-    ObtenerDatosBD();
-
-    let posicion = listadoPorHacer.findIndex( tarea => tarea.descripcion === descripcion);
-
-    if(posicion >= 0){
-        listadoPorHacer.splice(posicion, 1);
-        guardarDatos("Se ha eliminado correctamente :)");
-        return true;
-    }else{
+    ObtenerDatosBD('Se ha eliminado correctamente!!');
+    // Creamos una nueva cajita que contendra todos los valores excepto el que nosotros queremos eliminar y despues lo transferimos la nueva cajita a la cajita que contiene todas las tareas por hacer
+    let nuevoListado = listadoPorHacer.filter( tarea => tarea.descripcion !== descripcion);
+    // Cantidad de elementos que tiene cada cajita
+    if(listadoPorHacer.length === nuevoListado.length){
         return false;
+    }else{
+        listadoPorHacer = nuevoListado;
+        guardarDatos();
+        return true;
     }
+
+    //funcionalidad sin necesidad del filter
+    // let posicion = listadoPorHacer.findIndex( tarea => tarea.descripcion === descripcion);
+
+    // if(posicion >= 0){
+    //     eliminamos la tarea en base a su posicion dentro de la cajita y nosotros indicamos la cantidad que nosotros queremos borrar dentro de la posicion
+    //     listadoPorHacer.splice(posicion, 1);
+    //     guardarDatos("Se ha eliminado correctamente :)");
+    //     return true;
+    // }else{
+    //     return false;
+    // }
 }
 
 module.exports = {
