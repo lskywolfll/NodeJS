@@ -73,5 +73,5 @@ Es una aplicacion para poder crear una lista de tareas
 2. `node app Command argumento o alias valor`
 
 > ej: `node app crear -d "Dormir"`
-> ej: `node app actualizar -d "Dormir" -c true `
-> ej: `node app eliminar -d "Dormir"`
+>> ej: `node app actualizar -d "Dormir" -c true `
+>>> ej: `node app eliminar -d "Dormir"`
