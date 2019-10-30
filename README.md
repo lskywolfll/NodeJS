@@ -18,7 +18,7 @@ Se iran integrando comprensiones como comentarios conjunto a ejemplos sencillos 
 
 ## Multiplicar Console App
 
-Ubicado en la session de 03-BASES-NODE
+Ubicado en la sección de 03-BASES-NODE
 
 Es una aplicacion para generar archivos de tablas de multiplicar
 
@@ -44,3 +44,33 @@ Es una aplicacion para generar archivos de tablas de multiplicar
 2. Otra forma -> `node app < command > < Argumento o alias > < valor >`
 
 > ej: `node app crear -l 10 -b 3`
+
+## Lista de tareas Console App
+
+Ubicado en la sección 04-POR-HACER
+
+Es una aplicacion para poder crear una lista de tareas
+
+### Commands:
+
+1. crear
+2. actualizar
+3. eliminar
+
+### Argumentos:
+
+1. --descripcion
+2. --estado
+
+### Alias:
+
+1. -d < valor >
+2. -c < true o false >
+
+### Pasos:
+
+1. `npm install`
+2. `node app Command argumento o alias valor` 
+ej: `node app crear -d "Dormir"`
+ej: `node app actualizar -d "Dormir" -c true `
+ej: `node app eliminar -d "Dormir"`
