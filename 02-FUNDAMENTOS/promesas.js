@@ -82,3 +82,8 @@ let getSalario = (empleado) => {
     resolve('todo bien');
 })
 */
+
+marca.ObtenerMarcas().then(respuesta => {
+    datosTabla = respuesta.Descripcion.recordset;
+    return cliente.ObtenerCliente()
+})
