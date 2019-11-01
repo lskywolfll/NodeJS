@@ -75,3 +75,28 @@ Es una aplicacion para poder crear una lista de tareas
 > ej: `node app crear -d "Dormir"`
 >> ej: `node app actualizar -d "Dormir" -c true `
 >>> ej: `node app eliminar -d "Dormir"`
+
+## Aplicacion del clima 
+
+Ubicado en la sección 05-CLIMA-MUNDO
+
+Es una aplicacion para poder obtener el clima por terminal
+
+### Argumentos:
+
+1. --direccion
+
+### Alias:
+
+1. -d "text"
+
+### Pasos:
+
+1. `npm install`
+
+### Uso
+
+`node app -d "lugar"`
+
+> ej: node app -d "Santiago"
+>> output: El clima de santiago, Chile es de 25 grados

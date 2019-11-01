@@ -49,7 +49,7 @@ const getInfo = async (direccion) => {
 
 getInfo(argv.direccion)
     .then(resp => {
-        console.log(`El clima de ${resp.coordenadas.direction} es de ${resp.temperatura}`);
+        console.log(`El clima de ${resp.coordenadas.direction} es de ${resp.temperatura} grados`);
     })
     .catch(err => console.log(err));
 // 2 forma
