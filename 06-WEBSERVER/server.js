@@ -24,6 +24,17 @@ app.use(express.static(path.join(__dirname + '/public')));
 
 // Si tu pides a alguna ruta que no exista se toamara como error con express ya que su comunicacion esta con las rutas
 
+// Creacion de renderizacion de vistas del motor de express
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname + '/public/views'));
+
+app.get('/', (req, res) => {
+    res.render('home', {
+        nombre: 'Rene', 
+        year:new Date().getFullYear()
+    });
+});
+
 app.listen(3000, () => {
     console.log('El servidor esta corriendo en: http://localhost:3000');
 });
