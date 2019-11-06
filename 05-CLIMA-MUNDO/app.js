@@ -25,15 +25,15 @@ console.log(argv.direccion);
 // Crear una funcion que reciba una direccion y este me envie una mensaje por consola si paso bien: El clima de direccion es de n° grados y si no se pudo obtener se imprime: No se pudo determinar el cliam de direccion
 
 const getInfo = async (direccion) => {
-    const coordenadas = await climaLugar(direccion);
-    const temperatura = await getClima(coordenadas.latitud, coordenadas.longitud);
+    const lugar = await climaLugar(direccion);
+    const temperatura = await getClima(lugar.latitud, lugar.longitud);
 
-    if (!temperatura || !coordenadas) {
+    if (!temperatura || !lugar) {
         return new Error(`No se pudo determinar el clima de ${direccion}`);
     }
 
     return {
-        coordenadas,
+        lugar,
         temperatura
     }
 
@@ -49,7 +49,7 @@ const getInfo = async (direccion) => {
 
 getInfo(argv.direccion)
     .then(resp => {
-        console.log(`El clima de ${resp.coordenadas.direction} es de ${resp.temperatura} grados`);
+        console.log(`El clima de ${resp.lugar.direction} es de ${resp.temperatura} grados`);
     })
     .catch(err => console.log(err));
 // 2 forma
