@@ -7,6 +7,8 @@ const hbs = require('hbs');
 // Cuando importamos un modulo este se ejecutara en si mismo en este caso es lo unico que queremos que se registre el helper
 require(path.join(__dirname + '/public/hbs/helpers/helpers'));
 
+const port = process.env.PORT || 3000;
+
 // Crear archivos estaticos para acceder a el de forma global o que sean publicos
 
 app.use(express.static(path.join(__dirname + '/public')));
@@ -54,6 +56,6 @@ app.get('/about', (req, res) => {
     })
 })
 
-app.listen(3000, () => {
-    console.log('El servidor esta corriendo en: http://localhost:3000');
+app.listen(port, () => {
+    console.log(`El servidor esta corriendo en: http://localhost:${port}`);
 });
