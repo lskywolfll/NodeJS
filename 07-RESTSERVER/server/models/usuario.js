@@ -45,6 +45,16 @@ let usuarioSchema = new Schema({
         default: false
     }
 });
+
+usuarioSchema.methods.toJSON = function(){
+    
+    let user = this;
+    let userObject = user.toObject();
+    delete userObject.password;
+
+    return userObject;
+}
+
 // Agregamos una funcionalidad al esquema donde le agregamos un superpoder, en este punto usarmos la paqueteria de validacion que nos devolver el error completo y mejor estructurado, pero de igual manera se puede agregar otro parametros en el cual lo invoquemos como objeto y pongamos la propiedad de message y dentro de su contenido ponemos el {PATH} PATH en este punto seria el error encontrado por el cual no paso al validacion donde podemos agregar otro contenido despues de enviar el error.
 usuarioSchema.plugin(uniqueValidator, {
     message: '{PATH} debe de ser único'

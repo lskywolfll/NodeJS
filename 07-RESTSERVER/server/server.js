@@ -9,7 +9,7 @@ require('./config/config');
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
- 
+
 // parse application/json
 app.use(bodyParser.json());
 
@@ -23,15 +23,15 @@ app.use(require('./routes/usuario'));
 
 // // create application/json parser
 // var jsonParser = bodyParser.json()
- 
+
 // // create application/x-www-form-urlencoded parser
 // var urlencodedParser = bodyParser.urlencoded({ extended: false })
- 
+
 // // POST /login gets urlencoded bodies
 // app.post('/login', urlencodedParser, function (req, res) {
 //   res.send('welcome, ' + req.body.username)
 // })
- 
+
 // // POST /api/users gets JSON bodies
 // app.post('/api/users', jsonParser, function (req, res) {
 //   // create user in req.body
@@ -43,11 +43,17 @@ app.get('/', (req, res) => {
     res.send('Hola');
 });
 
-mongoose.connect('mongodb://localhost:27017/cafe', (err, res) => {
-    if(err) throw err;
+mongoose.connect('mongodb://localhost:27017/cafe', {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true
+},
+    (err, res) => {
+        if (err) throw err;
 
-    console.log('Base de datos corriendo localmente y conectada');
-});
+        console.log('Base de datos corriendo localmente y conectada');
+    }
+);
 
 app.listen(process.env.PORT, () => {
     console.log(`Se ha iniciado el servidor en: http://localhost:3000`);
