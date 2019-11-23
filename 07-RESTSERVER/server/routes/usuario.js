@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcrypt');
+const _ = require('underscore');
 
 app.get('/Usuario', (req, res) => {
     res.json('get Usuario');
@@ -44,9 +45,9 @@ app.delete('/Usuario', (req, res) => {
 app.put('/Usuario/:id', (req, res) => {
     // El parametros que se toman mediante la url con los (:variable) se tienen que llamar de la misma manera para que podamos obtener el dato enviado
     let id = req.params.id;
-    let body = req.body;
+    let body = _.pick(req.body, ['nombre','email','img', 'role', 'estado']);
 
-    Usuario.findByIdAndUpdate(id, body,{ new: true},(err, usuarioDB) => {
+    Usuario.findByIdAndUpdate(id, body,{ new: true, runValidators: true},(err, usuarioDB) => {
 
         if(err){
             return res.status(404).json({
