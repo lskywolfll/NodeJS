@@ -41,13 +41,27 @@ app.delete('/Usuario', (req, res) => {
     res.json('delete Usuario');
 });
 
-app.put('/Usuario/:idUser', (req, res) => {
+app.put('/Usuario/:id', (req, res) => {
     // El parametros que se toman mediante la url con los (:variable) se tienen que llamar de la misma manera para que podamos obtener el dato enviado
-    let id = req.params.idUser;
-    // Con el estandar ES6 es redundaten poner id: id, ya que por si solo poniendo id este lo instanciara con el mismo nombre de la variable
-    res.json({
-        id
+    let id = req.params.id;
+    let body = req.body;
+
+    Usuario.findByIdAndUpdate(id, body,{ new: true},(err, usuarioDB) => {
+
+        if(err){
+            return res.status(404).json({
+                ok: false,
+                err
+            });
+        }
+        
+        res.json({
+            ok: true,
+            usuario: usuarioDB
+        });
     });
+
+    // Con el estandar ES6 es redundaten poner id: id, ya que por si solo poniendo id este lo instanciara con el mismo nombre de la variable
 });
 
 module.exports = app;
