@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const Usuario = require('../models/usuario');
 
 app.get('/Usuario', (req, res) => {
     res.json('get Usuario');
@@ -9,18 +10,30 @@ app.post('/Usuario', (req, res) => {
 
     let body = req.body;
 
-    // console.log(body);
+    let usuario = new Usuario({
+        // Formas de recoleccion de datos enviados a la api, Locura completa
+        // 1- req.body.propiedad
+        // 2- body.propiedad
+        nombre: body.nombre,
+        email: body.email,
+        password: body.password,
+        role: body.role
+    });
 
-    if(!body.nombre){
-        res.status(400).json({
-            ok: false,
-            message: 'El nombre es necesario'
-        });
-    }else{
+    // Al guardar en mongo recibimos 2 parametros un erro y el usuario
+    usuario.save((err, usuarioDB) => {
+        if(err){
+            return res.status(400).json({
+                ok: false,
+                err: err
+            });
+        }
+
         res.json({
-            body
-        });
-    }
+            ok: true,
+            usuario: usuarioDB
+        })
+    });
 });
 
 app.delete('/Usuario', (req, res) => {
