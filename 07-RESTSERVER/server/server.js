@@ -1,4 +1,6 @@
 const express = require('express');
+const mongoose = require('mongoose');
+
 const app = express();
 const bodyParser = require('body-parser');
 
@@ -10,6 +12,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
  
 // parse application/json
 app.use(bodyParser.json());
+
+app.use(require('./routes/usuario'));
 
 // Serializar el contenido a json con bodyparser
 // Este extraer una porcion del cuepor de los datos que se envian por el req.body
@@ -39,39 +43,10 @@ app.get('/', (req, res) => {
     res.send('Hola');
 });
 
-app.get('/Usuario', (req, res) => {
-    res.json('get Usuario');
-});
+mongoose.connect('mongodb://localhost:27017/cafe', (err, res) => {
+    if(err) throw err;
 
-app.post('/Usuario', (req, res) => {
-
-    let body = req.body;
-
-    // console.log(body);
-
-    if(!body.nombre){
-        res.status(400).json({
-            ok: false,
-            message: 'El nombre es necesario'
-        });
-    }else{
-        res.json({
-            body
-        });
-    }
-});
-
-app.delete('/Usuario', (req, res) => {
-    res.json('delete Usuario');
-});
-
-app.put('/Usuario/:idUser', (req, res) => {
-    // El parametros que se toman mediante la url con los (:variable) se tienen que llamar de la misma manera para que podamos obtener el dato enviado
-    let id = req.params.idUser;
-    // Con el estandar ES6 es redundaten poner id: id, ya que por si solo poniendo id este lo instanciara con el mismo nombre de la variable
-    res.json({
-        id
-    });
+    console.log('Base de datos corriendo localmente y conectada');
 });
 
 app.listen(process.env.PORT, () => {
