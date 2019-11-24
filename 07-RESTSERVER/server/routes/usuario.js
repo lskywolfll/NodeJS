@@ -8,16 +8,19 @@ app.get('/Usuario', (req, res) => {
 
     const desde = Number(req.query.desde) || 0;
     const limite = Number(req.query.limite) || 16;
+    const activacion = req.query.activacion || true;
 
     // desde = Number(desde);
     // hasta = Number(hasta);
 
+    // 1- parametro => podemos crear un filtrado mediante un dato que posea un valor en especifico y solo recibir los datos que tengan ese valor en contreto, ya sea que el usuario este activo o no activo(no este por ej: en la empresa lo despidieron entonces este usuario ya no esta activo, los datos tienen que persistir en el tiempo). 
+
     // 2-parametros nos sirve para indicar que datos queremos recibir al buscar en la bd de mongo, usamos simplemente un string con las propiedades respectivas a quere los cuales se separan mediante un espacio
-    Usuario.find({}, 'nombre email google role estado img')
+    Usuario.find({ estado: activacion }, 'nombre email google role estado img')
         .skip(desde)
         .limit(limite)
-        .exec( (err, usuarios) => {
-            if(err){
+        .exec((err, usuarios) => {
+            if (err) {
                 return res.status(400).json({
                     ok: false,
                     err: err
@@ -29,7 +32,7 @@ app.get('/Usuario', (req, res) => {
             // Parametros
             // 1- filtro => {propiedad:valorDeseado} con los cuales solamente nos saldran los datos que entren en el Match de nuestro filtro ya sea nada o un dato especifico
             // 2- callback
-            Usuario.countDocuments({}, (err, conteo) => {
+            Usuario.countDocuments({ estado: activacion}, (err, conteo) => {
                 res.json({
                     ok: true,
                     usuarios,
@@ -55,7 +58,7 @@ app.post('/Usuario', (req, res) => {
 
     // Al guardar en mongo recibimos 2 parametros un erro y el usuario
     usuario.save((err, usuarioDB) => {
-        if(err){
+        if (err) {
             return res.status(400).json({
                 ok: false,
                 err: err
@@ -70,11 +73,32 @@ app.post('/Usuario', (req, res) => {
 });
 
 app.delete('/Usuario/:id', (req, res) => {
-    
+
     let id = req.params.id;
 
-    Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
-        if(err || !usuarioBorrado){
+    // Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
+    //     if(err || !usuarioBorrado){
+    //         return res.status(400).json({
+    //             ok: false,
+    //             message: 'Usuario no encontrado',
+    //             err: err
+    //         });
+    //     }
+
+    //     res.json({
+    //         ok: true,
+    //         usuario: usuarioBorrado
+    //     });
+    // });
+
+    // param 2 => indicamos la actualizacion que nosotros queremos hacer ya sea una sola propiedad o el objeto completo o ciertas propiedades que posea y no todos.
+
+    const cambioEstado = {
+        estado: false
+    }
+
+    Usuario.findByIdAndUpdate(id, { estado: false }, (err, usuarioBorrado) => {
+        if (err || !usuarioBorrado) {
             return res.status(400).json({
                 ok: false,
                 message: 'Usuario no encontrado',
@@ -87,23 +111,22 @@ app.delete('/Usuario/:id', (req, res) => {
             usuario: usuarioBorrado
         });
     });
-
 });
 
 app.put('/Usuario/:id', (req, res) => {
     // El parametros que se toman mediante la url con los (:variable) se tienen que llamar de la misma manera para que podamos obtener el dato enviado
     let id = req.params.id;
-    let body = _.pick(req.body, ['nombre','email','img', 'role', 'estado']);
+    let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
 
-    Usuario.findByIdAndUpdate(id, body,{ new: true, runValidators: true},(err, usuarioDB) => {
+    Usuario.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, usuarioDB) => {
 
-        if(err){
+        if (err) {
             return res.status(404).json({
                 ok: false,
                 err
             });
         }
-        
+
         res.json({
             ok: true,
             usuario: usuarioDB
