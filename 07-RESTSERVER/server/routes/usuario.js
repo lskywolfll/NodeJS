@@ -23,9 +23,17 @@ app.get('/Usuario', (req, res) => {
                 });
             }
 
-            res.json({
-                ok: true,
-                usuarios
+            // Contar la cantidad de registros
+            // el uso del {} como primer parametros si lo mandamos vacio entonces este nos mandara todos los datos completos indepeniente de lo que sea
+            // Parametros
+            // 1- filtro => {propiedad:valorDeseado} con los cuales solamente nos saldran los datos que entren en el Match de nuestro filtro ya sea nada o un dato especifico
+            // 2- callback
+            Usuario.countDocuments({}, (err, conteo) => {
+                res.json({
+                    ok: true,
+                    usuarios,
+                    cuantos: conteo
+                });
             });
         })
 });
