@@ -11,8 +11,9 @@ app.get('/Usuario', (req, res) => {
 
     // desde = Number(desde);
     // hasta = Number(hasta);
-    
-    Usuario.find({})
+
+    // 2-parametros nos sirve para indicar que datos queremos recibir al buscar en la bd de mongo, usamos simplemente un string con las propiedades respectivas a quere los cuales se separan mediante un espacio
+    Usuario.find({}, 'nombre email google role estado img')
         .skip(desde)
         .limit(limite)
         .exec( (err, usuarios) => {
