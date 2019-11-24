@@ -1,11 +1,12 @@
 const express = require('express');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
+const db = require('./config/db');
 
 const app = express();
 const bodyParser = require('body-parser');
 
 // Configuraciones del server
-require('./config/config');
+const config = require('./config/config');
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -43,19 +44,21 @@ app.get('/', (req, res) => {
     res.send('Hola');
 });
 
-mongoose.connect('mongodb://localhost:27017/cafe', {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false
-},
-    (err, res) => {
-        if (err) throw err;
+// mongoose.connect('mongodb://localhost:27017/cafe', {
+//     useUnifiedTopology: true,
+//     useNewUrlParser: true,
+//     useCreateIndex: true,
+//     useFindAndModify: false
+// },
+//     (err, res) => {
+//         if (err) throw err;
 
-        console.log('Base de datos corriendo localmente y conectada');
-    }
-);
+//         console.log('Base de datos corriendo localmente y conectada');
+//     }
+// );
 
-app.listen(process.env.PORT, () => {
-    console.log(`Se ha iniciado el servidor en: http://localhost:3000`);
+db(config.dbUrl);
+
+app.listen(config.port, () => {
+    console.log(`Se ha iniciado el servidor en: ${config.host}:${config.port}`);
 });
