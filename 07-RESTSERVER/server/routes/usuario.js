@@ -69,8 +69,25 @@ app.post('/Usuario', (req, res) => {
     });
 });
 
-app.delete('/Usuario', (req, res) => {
-    res.json('delete Usuario');
+app.delete('/Usuario/:id', (req, res) => {
+    
+    let id = req.params.id;
+
+    Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
+        if(err || !usuarioBorrado){
+            return res.status(400).json({
+                ok: false,
+                message: 'Usuario no encontrado',
+                err: err
+            });
+        }
+
+        res.json({
+            ok: true,
+            usuario: usuarioBorrado
+        });
+    });
+
 });
 
 app.put('/Usuario/:id', (req, res) => {
