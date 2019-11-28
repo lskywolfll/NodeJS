@@ -14,7 +14,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-app.use(require('./routes/usuario'));
+// Routes
+app.use(require('./routes/index'));
 
 // Serializar el contenido a json con bodyparser
 // Este extraer una porcion del cuepor de los datos que se envian por el req.body
