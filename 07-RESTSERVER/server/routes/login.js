@@ -19,7 +19,7 @@ app.post('/Login', (req, res) => {
                 err
             });
         }
-
+        // Si no se encuentra ningun usuario
         if (!usuarioDB) {
             return res.status(400).json({
                 ok: false,
@@ -28,14 +28,14 @@ app.post('/Login', (req, res) => {
                 }
             });
         }
-
+        // Comparacion de contraseñas con la que encriptada en la base de datos
         if (!bcrypt.compareSync(password, usuarioDB.password)) {
             return res.status(400).json({
                 ok: true,
                 message: 'Usuario o contraseña incorrrectos'
             });
         }
-
+        // Se crear el token en base al objeto que nosotros le indiquemos
         let token = jwt.sign({
             usuario: usuarioDB
         },

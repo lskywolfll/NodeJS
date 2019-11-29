@@ -18,6 +18,7 @@ const verficarToken = (req, res, next) => {
         }
 
         req.usuario = decoded.usuario;
+        console.log(decoded.usuario);
         next();
     });
 };
