@@ -1,7 +1,10 @@
 const express = require('express');
 const app = express();
+// Paquete de alertas para encriptar las contraseñas
 const bcrypt = require('bcrypt');
+// Tokens Web Json
 const jwt = require('jsonwebtoken');
+// Modelo de la tabla en mongodb
 const Usuario = require('../models/usuario');
 
 app.post('/Login', (req, res) => {
@@ -35,8 +38,8 @@ app.post('/Login', (req, res) => {
 
         let token = jwt.sign({
             usuario: usuarioDB
-        }, 
-        'secret'
+        },
+            process.env.SEED
         ,{
             expiresIn: process.env.CADUCIDAD_TOKEN
         });

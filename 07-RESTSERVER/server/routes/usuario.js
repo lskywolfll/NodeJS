@@ -3,8 +3,9 @@ const app = express();
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
+const { verficarToken } = require('../middleware/autenticacion');
 
-app.get('/Usuario', (req, res) => {
+app.get('/Usuario',  (req, res) => {
 
     const desde = Number(req.query.desde) || 0;
     const limite = Number(req.query.limite) || 16;
