@@ -3,7 +3,7 @@ const app = express();
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
-const { verficarToken } = require('../middleware/autenticacion');
+const { verficarToken, verificarAdmin_Role } = require('../middleware/autenticacion');
 
 app.get('/Usuario', verficarToken, (req, res) => {
 
@@ -43,11 +43,11 @@ app.get('/Usuario', verficarToken, (req, res) => {
         })
 });
 
-app.post('/Usuario', (req, res) => {
+app.post('/Usuario', [verficarToken, verificarAdmin_Role], (req, res) => {
 
-    let body = req.body;
+    const body = req.body;
 
-    let usuario = new Usuario({
+    const usuario = new Usuario({
         // Formas de recoleccion de datos enviados a la api, Locura completa
         // 1- req.body.propiedad
         // 2- body.propiedad
@@ -73,9 +73,9 @@ app.post('/Usuario', (req, res) => {
     });
 });
 
-app.delete('/Usuario/:id', (req, res) => {
+app.delete('/Usuario/:id', [verficarToken, verificarAdmin_Role], (req, res) => {
 
-    let id = req.params.id;
+    const id = req.params.id;
 
     // Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
     //     if(err || !usuarioBorrado){
@@ -94,9 +94,9 @@ app.delete('/Usuario/:id', (req, res) => {
 
     // param 2 => indicamos la actualizacion que nosotros queremos hacer ya sea una sola propiedad o el objeto completo o ciertas propiedades que posea y no todos.
 
-    const cambioEstado = {
-        estado: false
-    }
+    // const cambioEstado = {
+    //     estado: false
+    // }
 
     Usuario.findByIdAndUpdate(id, { estado: false }, (err, usuarioBorrado) => {
         if (err || !usuarioBorrado) {
@@ -114,9 +114,10 @@ app.delete('/Usuario/:id', (req, res) => {
     });
 });
 
-app.put('/Usuario/:id', (req, res) => {
+app.put('/Usuario/:id', [verficarToken, verificarAdmin_Role],(req, res) => {
     // El parametros que se toman mediante la url con los (:variable) se tienen que llamar de la misma manera para que podamos obtener el dato enviado
     let id = req.params.id;
+    // Una metodologia para obtener los datos del req.body de manera mas sencilla y rapida sin tener que insertarlo en alguna otra parte para poder usarlas
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
 
     Usuario.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, usuarioDB) => {
