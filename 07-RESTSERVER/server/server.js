@@ -1,7 +1,8 @@
 const express = require('express');
 // const mongoose = require('mongoose');
 const db = require('./config/db');
-
+// Rutas para cualquier sistema operativo
+const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 
@@ -13,6 +14,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
+
+// Habilitar la carpeta publica
+// resolve => soluciona el tema para que la ruta sea valida independiente de los argumentos que tengas
+app.use(express.static(path.resolve(__dirname , '../public')));
 
 // Routes
 app.use(require('./routes/index'));
@@ -41,9 +46,9 @@ app.use(require('./routes/index'));
 
 // end Example
 
-app.get('/', (req, res) => {
-    res.send('Hola');
-});
+// app.get('/', (req, res) => {
+//     res.send('Hola');
+// });
 
 // mongoose.connect('mongodb://localhost:27017/cafe', {
 //     useUnifiedTopology: true,
