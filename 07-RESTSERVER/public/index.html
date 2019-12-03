@@ -23,6 +23,16 @@
             console.log('Name: ' + profile.getName());
             console.log('Image URL: ' + profile.getImageUrl());
             console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+            let id_token = googleUser.getAuthResponse().id_token;
+            // Crear una peticion para enviarle el token al backend
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/google');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function () {
+                console.log('Signed in as: ' + xhr.responseText);
+            };
+            xhr.send('idtoken=' + id_token);
         }
 
         function signOut() {
@@ -32,7 +42,6 @@
             });
         }
 
-        
     </script>
 </body>
 
