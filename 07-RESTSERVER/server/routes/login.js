@@ -54,9 +54,16 @@ app.post('/Login', (req, res) => {
 
 
 app.post('/google', (req, res) => {
-    // let token = req.body.idtoken;
+    const token = req.body.idtoken;
+    const nombre = req.body.nombre;
+    const email = req.body.email;
+    const imagen = req.body.imagen;
 
-    // console.log(token);
+    console.log(`
+        nombre: ${nombre}
+        email: ${email}
+        imagenUrl: ${imagen}
+    `);
 
     res.json({
         body: req.body

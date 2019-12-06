@@ -19,12 +19,24 @@
     <script>
         function onSignIn(googleUser) {
             let profile = googleUser.getBasicProfile();
+            const nombre = profile.getName();
+            const email = profile.getEmail();
+            const imagen = profile.getImageUrl();
+
             console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+            console.log('Name: ' + nombre);
+            console.log('Image URL: ' + imagen);
+            console.log('Email: ' + email); // This is null if the 'email' scope is not present.
 
             let id_token = googleUser.getAuthResponse().id_token;
+
+
+            const usuarioGoogle = {
+                nombre: nombre,
+                email: email,
+                imagen: imagen,
+                idtoken: id_token   
+            }
             // Crear una peticion para enviarle el token al backend
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/google');
@@ -32,7 +44,9 @@
             xhr.onload = function () {
                 console.log('Signed in as: ' + xhr.responseText);
             };
-            xhr.send('idtoken=' + id_token);
+            // Envio de datos a la api rest
+            // xhr.send('idtoken=' + 1 +'&'+ 'nombre='+'hola');
+            xhr.send(`nombre=${nombre}&email=${email}&imagen=${imagen}&idtoken=${id_token}`);
         }
 
         function signOut() {
