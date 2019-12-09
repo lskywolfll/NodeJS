@@ -4,6 +4,9 @@ const app = express();
 const bcrypt = require('bcrypt');
 // Tokens Web Json
 const jwt = require('jsonwebtoken');
+// Validaciones de google
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client(process.env.CLIENT_ID);
 // Modelo de la tabla en mongodb
 const Usuario = require('../models/usuario');
 
@@ -40,9 +43,9 @@ app.post('/Login', (req, res) => {
             usuario: usuarioDB
         },
             process.env.SEED
-        ,{
-            expiresIn: process.env.CADUCIDAD_TOKEN
-        });
+            , {
+                expiresIn: process.env.CADUCIDAD_TOKEN
+            });
 
         res.json({
             ok: true,
@@ -52,12 +55,22 @@ app.post('/Login', (req, res) => {
     });
 });
 
+// Configuraciones de Google
+async function verify() {
+    const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: process.env.CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+        // Or, if multiple clients access the backend:
+        //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+    });
+    const payload = ticket.getPayload();
+    console.log(payload.name);
+}
+// verify().catch(console.error);
 
 app.post('/google', (req, res) => {
-    const token = req.body.idtoken;
-    const nombre = req.body.nombre;
-    const email = req.body.email;
-    const imagen = req.body.imagen;
+
+    verify(req.body.idToken);
 
     console.log(`
         nombre: ${nombre}
