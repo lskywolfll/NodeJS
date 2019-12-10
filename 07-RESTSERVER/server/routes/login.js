@@ -56,7 +56,7 @@ app.post('/Login', (req, res) => {
 });
 
 // Configuraciones de Google
-async function verify() {
+async function verify(token) {
     const ticket = await client.verifyIdToken({
         idToken: token,
         audience: process.env.CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
@@ -64,23 +64,34 @@ async function verify() {
         //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
     });
     const payload = ticket.getPayload();
-    console.log(payload.name);
+    // Propiedades a retornar con los datos obtenidos a partir del token del usuario
+    return {
+        nombre: payload.name,
+        email: payload.email,
+        imageUrl: payload.picture
+    }
 }
-// verify().catch(console.error);
 
-app.post('/google', (req, res) => {
+app.post('/google', async (req, res) => {
 
-    verify(req.body.idToken);
+    try {
+        const googleUser = await verify(req.body.idtoken)
+            .catch(err => {
+                return res.status(403).send({
+                    ok: false,
+                    err: err
+                });
+            });
 
-    console.log(`
-        nombre: ${nombre}
-        email: ${email}
-        imagenUrl: ${imagen}
-    `);
-
-    res.json({
-        body: req.body
-    })
+        res.json({
+            usuario: googleUser
+        });
+    } catch (error) {
+        res.status(500).send({
+            ok: false,
+            err: error
+        })
+    }
 });
 
 module.exports = app;
