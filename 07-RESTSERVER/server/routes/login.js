@@ -65,33 +65,90 @@ async function verify(token) {
     });
     const payload = ticket.getPayload();
     // Propiedades a retornar con los datos obtenidos a partir del token del usuario
+    // Tratando replicar un poco el modelo de nuestro usario para mongodb(schema)
     return {
         nombre: payload.name,
         email: payload.email,
-        imageUrl: payload.picture
+        imageUrl: payload.picture,
+        google: true
     }
 }
 
 app.post('/google', async (req, res) => {
 
-    try {
-        const googleUser = await verify(req.body.idtoken)
-            .catch(err => {
-                return res.status(403).send({
-                    ok: false,
-                    err: err
-                });
+    const googleUser = await verify(req.body.idtoken)
+        .catch(err => {
+            return res.status(403).json({
+                ok: false,
+                err: err
             });
-
-        res.json({
-            usuario: googleUser
         });
-    } catch (error) {
-        res.status(500).send({
-            ok: false,
-            err: error
-        })
-    }
+
+    Usuario.findOne({ email: googleUser.email }, (err, usuarioDB) => {
+        if (err) {
+            returnres.status(500).json({
+                ok: false,
+                err: err
+            });
+        }
+
+        if (usuarioDB) {
+            if (usuarioDB.google === false) {
+                return res.status(400).json({
+                    ok: false,
+                    err: {
+                        message: 'Debe de usar su autenticacion normal'
+                    }
+                });
+            } else {
+                let token = jwt.sign({
+                    usuario: usuarioDB
+                },
+                    process.env.SEEd,
+                    {
+                        expiresIn: process.env.CADUCIDAD_TOKEN
+                    }
+                );
+
+                return res.json({
+                    ok: true,
+                    usuario: usuarioDB,
+                    token
+                })
+            }
+        } else {
+            let usuario = new Usuario();
+
+            usuario.nombre = googleUser.nombre;
+            usuario.email = googleUser.email;
+            usuario.img = googleUser.picture;
+            usuario.google = true;
+            usuario.password = ':)';
+
+            usuario.save((err, usuarioDB) => {
+                if (err) {
+                    return res.status(500).json({
+                        ok: false,
+                        err
+                    });
+                }
+
+                let token = jwt.sign({
+                    usuario: usuarioDB
+                },
+                    process.env.SEEd,
+                    {
+                        expiresIn: process.env.CADUCIDAD_TOKEN
+                    });
+
+                return res.json({
+                    ok: true,
+                    usuario: usuarioDB,
+                    token
+                })
+            });
+        }
+    });
 });
 
 module.exports = app;
