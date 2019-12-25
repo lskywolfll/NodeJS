@@ -22,6 +22,9 @@
 
             let id_token = googleUser.getAuthResponse().id_token;
 
+            // Solo para tomar el token y probarla con postman
+            // console.log(id_token);
+
             // Crear una peticion para enviarle el token al backend
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/google');

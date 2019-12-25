@@ -93,6 +93,7 @@ app.post('/google', async (req, res) => {
         }
 
         if (usuarioDB) {
+            // Usuario ya registrado con el email de manera normal y por ello no puede ahora ingresar mediante el uso de google
             if (usuarioDB.google === false) {
                 return res.status(400).json({
                     ok: false,
@@ -117,6 +118,7 @@ app.post('/google', async (req, res) => {
                 })
             }
         } else {
+            // Si el usuario es la primera vez que ingresa ala pagian web y quiere registrarse por google
             let usuario = new Usuario();
 
             usuario.nombre = googleUser.nombre;
