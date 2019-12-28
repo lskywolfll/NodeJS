@@ -53,6 +53,7 @@ app.post('/Usuario', [verficarToken, verificarAdmin_Role], (req, res) => {
         // 2- body.propiedad
         nombre: body.nombre,
         email: body.email,
+        // Creacion de una contraseña con una seguridad en base a un algoritmo que indicas cuan robusta sera en este ejemplo es de 10 vueltas para hacerlo mas complejo nivel 10
         password: bcrypt.hashSync(body.password, 10),
         role: body.role
     });
