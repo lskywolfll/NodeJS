@@ -20,6 +20,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script>
+
         function onSignIn(googleUser) {
             let profile = googleUser.getBasicProfile();
 
@@ -43,7 +44,7 @@
             $.ajax({
                 url: "/google",
                 type: "POST",
-                data: {idtoken: id_token},
+                data: { idtoken: id_token },
                 success: function (data, textStatus, jqXHR) {
                     console.log(data);
                     // console.log(textStatus);
@@ -71,5 +72,4 @@
 
     </script>
 </body>
-
 </html>

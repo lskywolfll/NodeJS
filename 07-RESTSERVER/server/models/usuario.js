@@ -46,6 +46,9 @@ let usuarioSchema = new Schema({
     }
 });
 
+// Convierte a un objeto json(Javascript Object Notacion) y lo procesa antes que nos devuelva el dato completo en las apis que estemos usando
+// En este ejemplo quitamos la propiedad de la contraseña para cambiarle su valor para que de esta manera sea mas seguro y mas dificil para los atacanques de nuestra app conseguir un acceso direcctort de nuestros usuarios
+// Con  esto nosotros los vamos a proteger de esas pequeñas falllas que algunos programadores no tomas en cuenta a la hora de desarrollar para poder constuir algo siempre debemos tener un punto de vista mas a futuro
 usuarioSchema.methods.toJSON = function(){
     
     let user = this;

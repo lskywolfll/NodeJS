@@ -57,7 +57,7 @@ app.post('/Usuario', [verficarToken, verificarAdmin_Role], (req, res) => {
         role: body.role
     });
 
-    // Al guardar en mongo recibimos 2 parametros un erro y el usuario
+    // Al guardar en mongo recibimos 2 parametros un error y el usuario
     usuario.save((err, usuarioDB) => {
         if (err) {
             return res.status(400).json({
@@ -93,6 +93,7 @@ app.delete('/Usuario/:id', [verficarToken, verificarAdmin_Role], (req, res) => {
     // });
 
     // param 2 => indicamos la actualizacion que nosotros queremos hacer ya sea una sola propiedad o el objeto completo o ciertas propiedades que posea y no todos.
+    // Persistencia de los datos 
 
     // const cambioEstado = {
     //     estado: false

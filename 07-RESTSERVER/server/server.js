@@ -5,7 +5,7 @@ const db = require('./config/db');
 const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
-const cors = require('cors')
+// const cors = require('cors')
 
 // Configuraciones del server
 const config = require('./config/config');
@@ -66,6 +66,7 @@ app.use(require('./routes/index'));
 //     }
 // );
 
+// Conexion a la base de datos de mongo db
 db(config.dbUrl);
 
 app.listen(config.port, () => {
