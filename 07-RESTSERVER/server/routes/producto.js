@@ -47,7 +47,7 @@ app.get('/productos',verficarToken, (req, res) => {
 app.get('/producto/:id',verficarToken, (req, res) => {
 
     const id = req.params.id;
-    
+    // Podemos dejar las funciones del moongose ta cual como usmos en get de tal forma que solo en este caso pondriamos el id cerramos el parentesis luego populamos para los datos que esten dentro de las otras colleciones ya que nuestro esquema posee referencias a esas 2  y por ultimo nosotros usaremos el exec para poder ejecutarla conjunto a los populate
     Producto.findById(id,(err, productoDB) => {
         if(err){
             return res.status(500).json({
@@ -72,6 +72,34 @@ app.get('/producto/:id',verficarToken, (req, res) => {
     })
     .populate('usuario categoria', 'nombre email tipo descripcion');
 });
+////////////////////////// 
+// Buscador
+//////////////////////////
+app.get('/productos/buscar/:termino', (req, res) => {
+
+    const termino = req.params.termino;
+
+    // Expresion regular para buscar todas las posibles cosas que entren con estas letras u terminos
+    // el segundo parametros es para asignarle si va a ser senbile a las mayusculas o no, en este caso es indiferente y buscar ya sea mayuscula o minuscula con esos contenidos
+    const buscarIndistintaMente = new RegExp(termino, 'i');
+
+    Producto.find({nombre: buscarIndistintaMente})
+        .populate('categoria', 'tipo descripcion')
+        .exec((err, productoDB) => {
+            if(err){
+                return res.status(500).json({
+                    ok:false,
+                    err
+                });
+            }
+
+            res.status(200).json({
+                ok: true,
+                producto: productoDB
+            })
+        });
+});
+
 // Crea un producto con los datos que ncesita
 app.post('/producto',verficarToken, (req, res) => {
     // Datos necesarios para poder un dato en base al esquema del modelo creado

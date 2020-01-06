@@ -30,6 +30,7 @@ let productoSchema = new Schema({
     categoria:{
         type: mongoose.Schema.Types.ObjectId,
         required: [true, 'La categoria es necesaria'],
+        // El ref: 'collection' estara aputando a ella para de tal forma el id que posee esta propiedad que este ligada a esa coleccion unicamente y debe existir sino no se podra crear un producto o actualizar
         ref: 'Categoria'
     },
     usuario: {
